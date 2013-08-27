@@ -115,6 +115,10 @@ Endpoints:
     Private-Port-Name: EXTRA_1_PORT
     Private-Port:      15001
     Public-Port-Name:  EXTRA_1_PROXY_PORT
+    Mappings:
+      - Frontend:      ""
+        Backend:       ""
+        Options:       { }
   - Private-IP-Name:   IP
     Private-Port-Name: EXTRA_2_PORT
     Private-Port:      15002
