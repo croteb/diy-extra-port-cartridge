@@ -84,7 +84,23 @@ Endpoints:
       - Frontend:      "/health"
         Backend:       ""
         Options:       { health: true }
-  - Private-IP-Name:   IP
-    Private-Port-Name: EXTRA_PORT
-    Private-Port:      15000
-    Public-Port-Name:  EXTRA_PROXY_PORT
+  - Private-IP-Name:   IP_1
+    Private-Port-Name: EXTRA_PORT_1
+    Private-Port:      15001
+    Public-Port-Name:  EXTRA_PROXY_PORT_1
+  - Private-IP-Name:   IP_2
+    Private-Port-Name: EXTRA_PORT_2
+    Private-Port:      15002
+    Public-Port-Name:  EXTRA_PROXY_PORT_2
+  - Private-IP-Name:   IP_3
+    Private-Port-Name: EXTRA_PORT_3
+    Private-Port:      15003
+    Public-Port-Name:  EXTRA_PROXY_PORT_3
+  - Private-IP-Name:   IP_4
+    Private-Port-Name: EXTRA_PORT_4
+    Private-Port:      15004
+    Public-Port-Name:  EXTRA_PROXY_PORT_4
+  - Private-IP-Name:   IP_5
+    Private-Port-Name: EXTRA_PORT_5
+    Private-Port:      15005
+    Public-Port-Name:  EXTRA_PROXY_PORT_5
