@@ -1,5 +1,23 @@
 #!/bin/bash
 # The logic to start up your application should be put in this
 # script. The application will work only if it binds to
-# $OPENSHIFT_DIY_IP:8080
-nohup $OPENSHIFT_REPO_DIR/diy/testrubyserver.rb $OPENSHIFT_DIY_IP $OPENSHIFT_REPO_DIR/diy > $OPENSHIFT_DIY_DIR/logs/server.log 2>&1 &
+
+# 
+
+CUR_DIR=`dirname $0`
+source $CUR_DIR/util.sh
+
+source $OPENSHIFT_REPO_DIR/etc/platformer_service_data.conf
+
+if [ "$TELEMETRY_FEATURE_LIST" = "Manager" ]; then
+	redis_reg_broker
+else
+	broker=redis_get_broker
+fi
+echo  TODO which file to put broker data in?
+cd $OPENSHIFT_REPO_DIR/diy/telembaseinstall/bin
+./telemetry-service start
+
+# report manager url to service registry
+# this environment variable should come from platformer when it spins up a service registry
+

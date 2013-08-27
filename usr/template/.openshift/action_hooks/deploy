@@ -1,0 +1,41 @@
+#!/bin/bash
+echo "Configuring base Telem install"
+
+CUR_DIR=`dirname $0`
+source $CUR_DIR/util.sh
+
+# etc/org.ops4j.pax.web.cfg
+echo "Editing web.cfg"
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/org.ops4j.pax.web.cfg" "org.ops4j.pax.web.listening.addresses" $OPENSHIFT_DIY_IP
+
+# etc/org.apache.karaf.management.cfg
+echo "Editing managment.cfg"
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/org.apache.karaf.management.cfg" "rmiRegistryHost" $OPENSHIFT_DIY_IP
+
+
+# etc/org.apache.karaf.shell.cfg
+echo "Editing shell.cfg"
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/org.apache.karaf.shell.cfg" "sshHost" $OPENSHIFT_DIY_IP
+
+
+# etc/telemetry-wrapper.conf
+echo "Editing telemetry-wrapper.conf"
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/telemetry-wrapper.conf" "wrapper.java.additional.9=-Dh2.bindAddress" $OPENSHIFT_DIY_IP
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/telemetry-wrapper.conf" "set.JAVA_HOME" "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/jre"
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/telemetry-wrapper.conf" "set.default.KARAF_HOME" "$OPENSHIFT_REPO_DIR/diy/telembaseinstall"
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/telemetry-wrapper.conf" "set.default.KARAF_BASE" "$OPENSHIFT_REPO_DIR/diy/telembaseinstall"
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/telemetry-wrapper.conf" "set.default.KARAF_DATA" "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/data"
+
+
+# etc/com.ca.platform.telemetry.telemetrydb.TelemetryDBService.cfg
+echo "Editing TelemegryDBService.cfg"
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/com.ca.platform.telemetry.telemetrydb.TelemetryDBService.cfg" "source.host" $OPENSHIFT_DIY_IP
+
+in_uri_nio="tcp://$OPENSHIFT_DIY_IP:61616"
+echo "Editing TelemetryBroker.cfg"
+replace_prop "$OPENSHIFT_REPO_DIR/diy/telembaseinstall/etc/com.ca.platform.telemetry.jms.broker.TelemetryBroker.cfg" \
+in.uri.nio $in_uri_nio
+
+# this is manager specific
+echo "Editing platformer_service_data.conf"
+replace_prop "$OPENSHIFT_REPO_DIR/etc/platformer_service_data.conf" IN_URI_NIO $in_uri_nio

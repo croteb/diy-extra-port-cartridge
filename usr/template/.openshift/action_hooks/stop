@@ -1,10 +1,15 @@
 #!/bin/bash
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-# The logic to stop your application should be put in this script.
-if [ -z "$(ps -ef | grep testrubyserver.rb | grep -v grep)" ]
-then
-    client_result "Application is already stopped"
-else
-    kill `ps -ef | grep testrubyserver.rb | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
+#cd $OPENSHIFT_REPO_DIR/diy/telembaseinstall/bin
+#./telemetry-service stop
+
+killall java
+
+source $OPENSHIFT_REPO_DIR/etc/platformer_service_data.conf
+source `dirname $0`/util.sh
+if [ "$TELEMETRY_FEATURE_LIST" = "Manager" ]; then
+	redis_unreg_broker
 fi
+
+exit 0
